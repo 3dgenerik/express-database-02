@@ -1,0 +1,1 @@
+CREATE TABLE books (id SERIAL PRIMARY KEY, name VARCHAR(100), author VARCHAR(100), pages INTEGER);
