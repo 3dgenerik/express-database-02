@@ -6,7 +6,7 @@ import {
     POSTGRES_USER,
     POSTGRES_PASSWORD,
     POSTGRES_HOST,
-} from '../../../config';
+} from './config';
 
 let client: Pool = new Pool({
     host: POSTGRES_HOST,

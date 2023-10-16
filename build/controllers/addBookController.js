@@ -31,10 +31,15 @@ class addBookController {
                 author: req.body.author,
                 pages: req.body.pages
             };
-            const books = new booksStore_1.BooksStore();
+            const store = new booksStore_1.BooksStore();
             try {
-                const returnBook = yield books.createBook(book);
-                res.send(returnBook);
+                if (!(yield store.bookExist(book))) {
+                    const returnBook = yield store.createBook(book);
+                    res.send(returnBook);
+                }
+                else {
+                    throw new CustomError_1.CustomError(`Book with name ${book.name}, author ${book.author}, pages ${book.pages} already exists.`, 422);
+                }
             }
             catch (err) {
                 next(new CustomError_1.CustomError(`${err}`, 422));

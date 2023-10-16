@@ -11,6 +11,7 @@ require("./controllers/getBooksController");
 require("./controllers/addBookController");
 require("./controllers/getBookByIdController");
 require("./controllers/updateBookController");
+require("./controllers/deleteBook");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -19,3 +20,4 @@ app.use(catchErrorMiddleware_1.catchErrorMiddleware);
 app.listen(config_1.PORT, () => {
     console.log(`...listening port ${config_1.PORT}`);
 });
+exports.default = app;

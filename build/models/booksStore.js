@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BooksStore = void 0;
-const database_1 = __importDefault(require("./tests/helpers/database"));
+const database_1 = __importDefault(require("../database"));
 class BooksStore {
     index() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22,6 +22,28 @@ class BooksStore {
             const result = yield conn.query(sql);
             conn.release();
             return result.rows;
+        });
+    }
+    bookExist(book) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const allBooks = yield this.index();
+            for (const item of allBooks) {
+                if (item.name === book.name && item.author === book.author && item.pages === book.pages) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+    idExist(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const allBooks = yield this.index();
+            for (const item of allBooks) {
+                if (item.id === id) {
+                    return true;
+                }
+            }
+            return false;
         });
     }
     getById(id) {
@@ -56,6 +78,15 @@ class BooksStore {
             const conn = yield database_1.default.connect();
             const sql = 'UPDATE books SET name = ($1), author = ($2), pages = ($3) WHERE id = ($4) RETURNING *';
             const result = yield conn.query(sql, [name, author, pages, id]);
+            conn.release();
+            return result.rows[0];
+        });
+    }
+    deleteBook(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const conn = yield database_1.default.connect();
+            const sql = 'DELETE FROM books WHERE id = ($1) RETURNING *';
+            const result = yield conn.query(sql, [id]);
             conn.release();
             return result.rows[0];
         });

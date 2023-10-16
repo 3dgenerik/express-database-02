@@ -6,6 +6,7 @@ import './controllers/getBooksController'
 import './controllers/addBookController'
 import './controllers/getBookByIdController'
 import './controllers/updateBookController'
+import './controllers/deleteBook'
 
 const app = express();
 
@@ -18,3 +19,5 @@ app.use(catchErrorMiddleware);
 app.listen(PORT, () => {
     console.log(`...listening port ${PORT}`);
 });
+
+export default app;

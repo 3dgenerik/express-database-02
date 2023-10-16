@@ -21,35 +21,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("./decorators");
 const booksStore_1 = require("../models/booksStore");
 const CustomError_1 = require("../errors/CustomError");
-const paramsValidationMiddleware_1 = require("../middlewares/paramsValidationMiddleware");
-let GetBookByIdController = 
+let deleteBookController = 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-class GetBookByIdController {
-    getBookById(req, res, next) {
+class deleteBookController {
+    deleteBook(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             const store = new booksStore_1.BooksStore();
             try {
-                const book = yield store.getById(Number(id));
-                if (yield store.idExist(Number(id)))
-                    res.send(book);
-                else
-                    throw new CustomError_1.CustomError(`Book with id ${id} doesn't exist in database`, 422);
+                if (yield store.idExist(Number(id))) {
+                    const returnBook = yield store.deleteBook(Number(id));
+                    res.send(returnBook);
+                }
+                else {
+                    throw new CustomError_1.CustomError(`Nothing to delete`, 422);
+                }
             }
             catch (err) {
-                next(new CustomError_1.CustomError(err, 422));
+                // if(err instanceof CustomError){
+                //     next(err)
+                // }
+                next(new CustomError_1.CustomError(`${err}`, 422));
             }
         });
     }
 };
 __decorate([
-    (0, decorators_1.get)(`${"/books" /* AppRoutePaths.ENDPOINTS */}/:id`),
-    (0, decorators_1.middleware)((0, paramsValidationMiddleware_1.paramsValidationMiddleware)()),
+    (0, decorators_1.del)(`${"/books" /* AppRoutePaths.ENDPOINTS */}/:id`),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object, Function]),
     __metadata("design:returntype", Promise)
-], GetBookByIdController.prototype, "getBookById", null);
-GetBookByIdController = __decorate([
+], deleteBookController.prototype, "deleteBook", null);
+deleteBookController = __decorate([
     (0, decorators_1.controller)("/api" /* AppRoutePaths.CONTROLLER */)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-], GetBookByIdController);
+], deleteBookController);

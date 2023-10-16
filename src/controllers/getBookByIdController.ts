@@ -15,7 +15,10 @@ class GetBookByIdController{
         const store = new BooksStore()
         try{
             const book = await store.getById(Number(id))
-            res.send(book)
+            if(await store.idExist(Number(id)))
+                res.send(book)
+            else
+                throw new CustomError(`Book with id ${id} doesn't exist in database`, 422)
         }catch(err){
             next(new CustomError(err as string, 422))
         }
