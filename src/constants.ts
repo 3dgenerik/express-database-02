@@ -16,6 +16,7 @@ export const enum AppFeatures {
 export const enum AppRoutePaths {
     CONTROLLER = '/api',
     ENDPOINTS = '/books',
+    USER_ENDPOINTS = '/users'
 }
 
 export interface IBody {

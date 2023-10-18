@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { AppRoutePaths } from "../constants";
-import { controller, middleware, put } from "./decorators";
-import { CustomError } from "../errors/CustomError";
-import { BooksStore } from "../models/booksStore";
-import { paramsValidationMiddleware } from "../middlewares/paramsValidationMiddleware";
-import { Book } from "../models/booksStore";
+import { AppRoutePaths } from "../../constants";
+import { controller, middleware, put } from "../decorators";
+import { CustomError } from "../../errors/CustomError";
+import { BooksStore } from "../../models/booksStore";
+import { paramsValidationMiddleware } from "../../middlewares/paramsValidationMiddleware";
+import { Book } from "../../models/booksStore";
 
 @controller(AppRoutePaths.CONTROLLER)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

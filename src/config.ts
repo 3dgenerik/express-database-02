@@ -9,3 +9,5 @@ export const POSTGRES_USER = process.env.POSTGRES_USER;
 export const POSTGRES_DB = process.env.POSTGRES_DB;
 export const POSTGRES_DB_TEST = process.env.POSTGRES_DB_TEST;
 export const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
+export const BCRYPT_PASSWORD = process.env.BCRYPT_PASSWORD;
+export const SALT_ROUND = process.env.SALT_ROUND;

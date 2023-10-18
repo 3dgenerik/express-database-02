@@ -2,11 +2,13 @@ import express from 'express';
 import { PORT } from './config';
 import { catchErrorMiddleware } from './middlewares/catchErrorMiddleware';
 import { RouteApp } from './RouteApp';
-import './controllers/getBooksController'
-import './controllers/addBookController'
-import './controllers/getBookByIdController'
-import './controllers/updateBookController'
-import './controllers/deleteBook'
+import './controllers/books/getBooksController'
+import './controllers/books/addBookController'
+import './controllers/books/getBookByIdController'
+import './controllers/books/updateBookController'
+import './controllers/books/deleteBook'
+import './controllers/users/getUsersController'
+import './controllers/users/createUserController'
 
 const app = express();
 
