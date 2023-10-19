@@ -3,10 +3,12 @@ import { AppRoutePaths } from "../../constants";
 import { controller, middleware, post } from "../decorators";
 import { CustomError } from "../../errors/CustomError";
 import { UsersStore, IUser } from "../../models/usersStore";
-import { validator } from "../decorators";
 import { bodyValidationMiddleware } from "../../middlewares/bodyValidationMiddleware";
+import jwt  from "jsonwebtoken";
+import { TOKEN_SECRET } from "../../config";
 
 @controller(AppRoutePaths.CONTROLLER)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class CreateUserController{
     @post(`${AppRoutePaths.USER_ENDPOINTS}/signup`)
     @middleware(bodyValidationMiddleware(["username", "password"]))
@@ -26,7 +28,9 @@ class CreateUserController{
                 throw new CustomError('User already exists.', 422)
 
             const addedUser = await store.createUser(user)
-            res.send(addedUser)
+            const token = jwt.sign({user: addedUser}, TOKEN_SECRET!);
+            
+            res.send(token)
         }catch(err){
             if(err instanceof CustomError)
                 next(err)

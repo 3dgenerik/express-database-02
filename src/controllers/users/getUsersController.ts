@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { AppRoutePaths } from "../../constants";
 import { controller, get } from "../decorators";
-import { UsersStore, IUser } from "../../models/usersStore";
+import { UsersStore } from "../../models/usersStore";
 import { CustomError } from "../../errors/CustomError";
 
 @controller(AppRoutePaths.CONTROLLER)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class GetUsersController{
     @get(AppRoutePaths.USER_ENDPOINTS)
     async getUsersController(req: Request, res: Response, next: NextFunction){

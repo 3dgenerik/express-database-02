@@ -21,7 +21,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../decorators");
 const usersStore_1 = require("../../models/usersStore");
 const CustomError_1 = require("../../errors/CustomError");
-let GetUsersController = class GetUsersController {
+let GetUsersController = 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+class GetUsersController {
     getUsersController(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -44,4 +46,5 @@ __decorate([
 ], GetUsersController.prototype, "getUsersController", null);
 GetUsersController = __decorate([
     (0, decorators_1.controller)("/api" /* AppRoutePaths.CONTROLLER */)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 ], GetUsersController);

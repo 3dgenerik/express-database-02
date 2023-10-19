@@ -13,6 +13,7 @@
     "jasmine": "jasmine",
     "up": "db-migrate --env test up && db-migrate up",
     "down": "db-migrate --env test down && db-migrate down",
+    "reset": "db-migrate reset",
     "create": "db-migrate create books --sql-file",
     "test": "set ENV=test&& db-migrate --env test up && npm run build && npm run jasmine && db-migrate db:drop test"
   },
@@ -23,6 +24,7 @@
     "@types/bcrypt": "^5.0.1",
     "@types/express": "^4.17.19",
     "@types/jasmine": "^5.1.0",
+    "@types/jsonwebtoken": "^9.0.4",
     "@types/pg": "^8.10.5",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
@@ -39,6 +41,7 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13"
   }

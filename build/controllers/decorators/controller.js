@@ -10,7 +10,7 @@ const controller = (prefixRoute) => {
         for (const key of targetPrototypeNames) {
             const path = Reflect.getMetadata("path" /* AppFeatures.PATH */, target.prototype, key);
             const method = Reflect.getMetadata("method" /* AppFeatures.METHOD */, target.prototype, key);
-            const validate = Reflect.getMetadata("validator" /* AppFeatures.VALIDATOR */, target.prototype, key) || [];
+            // const validate = Reflect.getMetadata(AppFeatures.VALIDATOR, target.prototype, key) || []
             const middlewares = Reflect.getMetadata("middleware" /* AppFeatures.MIDDLEWARE */, target.prototype, key) || [];
             if (path && method) {
                 router[method](`${prefixRoute}${path}`, [...middlewares], target.prototype[key]);

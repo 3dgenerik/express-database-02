@@ -17,12 +17,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../decorators");
 const CustomError_1 = require("../../errors/CustomError");
 const usersStore_1 = require("../../models/usersStore");
 const bodyValidationMiddleware_1 = require("../../middlewares/bodyValidationMiddleware");
-let CreateUserController = class CreateUserController {
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const config_1 = require("../../config");
+let CreateUserController = 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+class CreateUserController {
     createUSer(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const { username, password } = req.body;
@@ -36,7 +43,8 @@ let CreateUserController = class CreateUserController {
                 if (isUserExist)
                     throw new CustomError_1.CustomError('User already exists.', 422);
                 const addedUser = yield store.createUser(user);
-                res.send(addedUser);
+                const token = jsonwebtoken_1.default.sign({ user: addedUser }, config_1.TOKEN_SECRET);
+                res.send(token);
             }
             catch (err) {
                 if (err instanceof CustomError_1.CustomError)
@@ -55,4 +63,5 @@ __decorate([
 ], CreateUserController.prototype, "createUSer", null);
 CreateUserController = __decorate([
     (0, decorators_1.controller)("/api" /* AppRoutePaths.CONTROLLER */)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 ], CreateUserController);

@@ -21,6 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../decorators");
 const booksStore_1 = require("../../models/booksStore");
 const CustomError_1 = require("../../errors/CustomError");
+const verifyAuthToken_1 = require("../../middlewares/verifyAuthToken");
 let addBookController = 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class addBookController {
@@ -42,6 +43,8 @@ class addBookController {
                 }
             }
             catch (err) {
+                if (err instanceof CustomError_1.CustomError)
+                    next(err);
                 next(new CustomError_1.CustomError(`${err}`, 422));
             }
         });
@@ -49,6 +52,7 @@ class addBookController {
 };
 __decorate([
     (0, decorators_1.post)("/books" /* AppRoutePaths.ENDPOINTS */),
+    (0, decorators_1.middleware)((0, verifyAuthToken_1.verifyAuthToken)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object, Function]),
     __metadata("design:returntype", Promise)

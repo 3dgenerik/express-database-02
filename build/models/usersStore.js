@@ -60,12 +60,19 @@ class UsersStore {
     }
     authUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
+            const userExist = yield this.userExist(user.username);
+            if (!userExist)
+                return null;
             const conn = yield database_1.default.connect();
             const sql = 'SELECT * from users WHERE username = ($1)';
             const result = yield conn.query(sql, [user.username]);
             conn.release();
             const dbUser = result.rows[0];
+            const isMatch = yield this.compareHash(user.password, dbUser.password_hash);
+            if (!isMatch)
+                return null;
             return {
+                id: dbUser.id,
                 username: dbUser.username,
                 password: dbUser.password_hash
             };

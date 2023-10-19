@@ -20,7 +20,7 @@ export const controller = (prefixRoute: AppRoutePaths) => {
                 key,
             ) as AppMethods;
 
-            const validate = Reflect.getMetadata(AppFeatures.VALIDATOR, target.prototype, key) || []
+            // const validate = Reflect.getMetadata(AppFeatures.VALIDATOR, target.prototype, key) || []
 
             const middlewares = Reflect.getMetadata(
                 AppFeatures.MIDDLEWARE,

@@ -1,4 +1,3 @@
-import { config } from "dotenv";
 import client from "../database";
 import bcrypt from 'bcrypt';
 import { SALT_ROUND } from "../config";
@@ -50,15 +49,25 @@ export class UsersStore {
         return result.rows[0]
     }
 
-    async authUser(user:IUser):Promise<IUser>{
+    async authUser(user:IUser):Promise<IUser | null>{
+
+        const userExist = await this.userExist(user.username)
+
+        if(!userExist)
+            return null;
+
         const conn = await client.connect()
         const sql = 'SELECT * from users WHERE username = ($1)';
         const result = await conn.query(sql, [user.username])
         conn.release()
-
         const dbUser = result.rows[0]
 
+        const isMatch = await this.compareHash(user.password, dbUser.password_hash)
+
+        if(!isMatch)
+            return null;
         return {
+            id:dbUser.id,
             username: dbUser.username,
             password: dbUser.password_hash
         }

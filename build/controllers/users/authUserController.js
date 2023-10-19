@@ -22,19 +22,17 @@ const decorators_1 = require("../decorators");
 const usersStore_1 = require("../../models/usersStore");
 const CustomError_1 = require("../../errors/CustomError");
 const bodyValidationMiddleware_1 = require("../../middlewares/bodyValidationMiddleware");
-let AuthUserController = class AuthUserController {
+let AuthUserController = 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+class AuthUserController {
     authUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = req.body;
                 const store = new usersStore_1.UsersStore();
-                const isUserExist = yield store.userExist(user.username);
-                if (!isUserExist)
-                    throw new CustomError_1.CustomError("User not found.", 401);
                 const authUser = yield store.authUser(user);
-                const isPasswordMatch = yield store.compareHash(user.password, authUser.password);
-                if (!isPasswordMatch)
-                    throw new CustomError_1.CustomError("Password doesn't match.", 401);
+                if (!authUser)
+                    throw new CustomError_1.CustomError(`Unauthorized: Provide valid credentials to access.`, 401);
                 res.send(authUser);
             }
             catch (err) {
@@ -54,4 +52,5 @@ __decorate([
 ], AuthUserController.prototype, "authUser", null);
 AuthUserController = __decorate([
     (0, decorators_1.controller)("/api" /* AppRoutePaths.CONTROLLER */)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 ], AuthUserController);

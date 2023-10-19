@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { controller, post, del } from "../decorators";
+import { controller, del } from "../decorators";
 import { BooksStore } from "../../models/booksStore";
-import { Book } from "../../models/booksStore";
 import { CustomError } from "../../errors/CustomError";
 import { AppRoutePaths } from "../../constants";
 

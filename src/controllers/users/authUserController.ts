@@ -6,6 +6,7 @@ import { CustomError } from "../../errors/CustomError";
 import { bodyValidationMiddleware } from "../../middlewares/bodyValidationMiddleware";
 
 @controller(AppRoutePaths.CONTROLLER)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class AuthUserController{
 
     @post(`${AppRoutePaths.USER_ENDPOINTS}/signin`)
@@ -13,19 +14,14 @@ class AuthUserController{
     async authUser(req: Request, res: Response, next: NextFunction){
         try{
             const user: IUser = req.body;
-            const store = new UsersStore()
-            
-            const isUserExist = await store.userExist(user.username)
 
-            if(!isUserExist) throw new CustomError("User not found.", 401);
-            
+            const store = new UsersStore()            
             const authUser = await store.authUser(user)
-            const isPasswordMatch = await store.compareHash(user.password, authUser.password)
-            
-            if(!isPasswordMatch) throw new CustomError("Password doesn't match.", 401);
+        
+            if(!authUser)
+                throw new CustomError(`Unauthorized: Provide valid credentials to access.`, 401)    
 
             res.send(authUser)
-
             
         }catch(err){
             if(err instanceof CustomError)
