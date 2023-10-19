@@ -22,7 +22,14 @@ export class UsersStore {
         return isMatch;
     }
 
-    async userExist(){
+    async userExist(username: string):Promise<boolean>{
+        const allUsers = await this.getAllUsers()
+        for (const user of allUsers) {
+            if(user.username===username)
+                return true;
+        }
+        return false;
+
     }
 
     async getAllUsers():Promise<IUser[]>{
@@ -41,6 +48,20 @@ export class UsersStore {
         const result = await conn.query(sql, [user.username, hash])
         conn.release()
         return result.rows[0]
+    }
+
+    async authUser(user:IUser):Promise<IUser>{
+        const conn = await client.connect()
+        const sql = 'SELECT * from users WHERE username = ($1)';
+        const result = await conn.query(sql, [user.username])
+        conn.release()
+
+        const dbUser = result.rows[0]
+
+        return {
+            username: dbUser.username,
+            password: dbUser.password_hash
+        }
     }
 }
 

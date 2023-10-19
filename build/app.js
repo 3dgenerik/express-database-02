@@ -14,6 +14,7 @@ require("./controllers/books/updateBookController");
 require("./controllers/books/deleteBook");
 require("./controllers/users/getUsersController");
 require("./controllers/users/createUserController");
+require("./controllers/users/authUserController");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));

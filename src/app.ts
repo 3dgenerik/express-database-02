@@ -9,6 +9,7 @@ import './controllers/books/updateBookController'
 import './controllers/books/deleteBook'
 import './controllers/users/getUsersController'
 import './controllers/users/createUserController'
+import './controllers/users/authUserController'
 
 const app = express();
 

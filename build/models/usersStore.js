@@ -29,8 +29,14 @@ class UsersStore {
             return isMatch;
         });
     }
-    userExist() {
+    userExist(username) {
         return __awaiter(this, void 0, void 0, function* () {
+            const allUsers = yield this.getAllUsers();
+            for (const user of allUsers) {
+                if (user.username === username)
+                    return true;
+            }
+            return false;
         });
     }
     getAllUsers() {
@@ -50,6 +56,19 @@ class UsersStore {
             const result = yield conn.query(sql, [user.username, hash]);
             conn.release();
             return result.rows[0];
+        });
+    }
+    authUser(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const conn = yield database_1.default.connect();
+            const sql = 'SELECT * from users WHERE username = ($1)';
+            const result = yield conn.query(sql, [user.username]);
+            conn.release();
+            const dbUser = result.rows[0];
+            return {
+                username: dbUser.username,
+                password: dbUser.password_hash
+            };
         });
     }
 }
